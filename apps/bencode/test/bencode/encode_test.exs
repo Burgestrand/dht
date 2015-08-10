@@ -2,8 +2,8 @@ defmodule Bencode.EncodeTest do
   use ExSpec, async: true
 
   defp encode!(value) do
-    {:ok, iodata} = Bencode.encode(value)
-    IO.iodata_to_binary(iodata)
+    value |> Bencode.encode
+          |> IO.iodata_to_binary
   end
 
   describe "byte strings" do

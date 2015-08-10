@@ -5,11 +5,10 @@ defmodule Bencode do
   Encode a value to Bencoding.
 
     iex> Bencode.encode("hello world")
-    {:ok, ["11", ":", "hello world"]}
+    ["11", ":", "hello world"]
   """
-  @spec encode(Encoder.t, Keyword.t) :: {:ok, iolist}
+  @spec encode(Encoder.t, Keyword.t) :: iolist
   def encode(value, options \\ []) do
-    iolist = Encoder.encode(value, options)
-    {:ok, iolist}
+    Encoder.encode(value, options)
   end
 end
