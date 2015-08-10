@@ -27,6 +27,17 @@ defmodule Bencode.EncodeTest do
   end
 
   describe "integers" do
+    test "zero" do
+      assert encode!(0) == "i0e"
+    end
+
+    test "positive" do
+      assert encode!(101) == "i101e"
+    end
+
+    test "negative" do
+      assert encode!(-15) == "i-15e"
+    end
   end
 
   describe "lists" do

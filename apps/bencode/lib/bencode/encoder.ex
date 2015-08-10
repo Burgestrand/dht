@@ -14,3 +14,9 @@ defimpl Bencode.Encoder, for: BitString do
       description: "cannot bencode bitstrings"
   end
 end
+
+defimpl Bencode.Encoder, for: Integer do
+  def encode(integer, _options) do
+    ["i", Integer.to_string(integer), "e"]
+  end
+end
