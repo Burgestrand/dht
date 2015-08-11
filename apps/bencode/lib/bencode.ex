@@ -7,8 +7,8 @@ defmodule Bencode do
     iex> Bencode.encode("hello world")
     ["11", ":", "hello world"]
   """
-  @spec encode(Encoder.t, Keyword.t) :: iolist
-  def encode(value, options \\ []) do
-    Encoder.encode(value, options)
+  @spec encode(Encoder.t) :: iolist
+  def encode(value) do
+    Encoder.encode(value)
   end
 end

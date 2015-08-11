@@ -1,13 +1,13 @@
 defprotocol Bencode.Encoder do
-  def encode(value, options)
+  def encode(value)
 end
 
 defimpl Bencode.Encoder, for: BitString do
-  def encode(string, _options) when is_binary(string) do
+  def encode(string) when is_binary(string) do
     [string |> byte_size |> Integer.to_string, ":", string]
   end
 
-  def encode(string, _options) do
+  def encode(string) do
     raise Protocol.UndefinedError,
       protocol: @protocol,
       value: string,
@@ -16,13 +16,13 @@ defimpl Bencode.Encoder, for: BitString do
 end
 
 defimpl Bencode.Encoder, for: Integer do
-  def encode(integer, _options) do
+  def encode(integer) do
     ["i", integer |> Integer.to_string, "e"]
   end
 end
 
 defimpl Bencode.Encoder, for: List do
-  def encode(list, _options) do
+  def encode(list) do
     ["l", list |> Enum.map(&Bencode.encode/1), "e"]
   end
 end
