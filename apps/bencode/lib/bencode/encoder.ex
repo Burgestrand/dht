@@ -17,6 +17,12 @@ end
 
 defimpl Bencode.Encoder, for: Integer do
   def encode(integer, _options) do
-    ["i", Integer.to_string(integer), "e"]
+    ["i", integer |> Integer.to_string, "e"]
+  end
+end
+
+defimpl Bencode.Encoder, for: List do
+  def encode(list, _options) do
+    ["l", list |> Enum.map(&Bencode.encode/1), "e"]
   end
 end

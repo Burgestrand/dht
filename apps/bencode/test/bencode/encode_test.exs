@@ -41,6 +41,17 @@ defmodule Bencode.EncodeTest do
   end
 
   describe "lists" do
+    test "empty" do
+      assert encode!([]) == "le"
+    end
+
+    test "nested" do
+      assert encode!([[]]) == "llee"
+    end
+
+    test "normal" do
+      assert encode!([1, [2, 3], 4]) == "li1eli2ei3eei4ee"
+    end
   end
 
   describe "dictionaries" do
