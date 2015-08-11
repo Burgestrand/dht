@@ -26,3 +26,22 @@ defimpl Bencode.Encoder, for: List do
     ["l", list |> Enum.map(&Bencode.encode/1), "e"]
   end
 end
+
+defimpl Bencode.Encoder, for: Map do
+  alias Bencode.Encoder
+
+  def encode(map) do
+    ["d", map |> Enum.sort |> Enum.map(&encode_entry/1), "e"]
+  end
+
+  defp encode_entry({k, v}) when is_binary(k) do
+    [Encoder.encode(k), Encoder.encode(v)]
+  end
+
+  defp encode_entry(entry) do
+    raise Protocol.UndefinedError,
+      protocol: @protocol,
+      value: entry,
+      description: "dictionary keys must be binaries"
+  end
+end

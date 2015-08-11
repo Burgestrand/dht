@@ -54,6 +54,15 @@ defmodule Bencode.EncodeTest do
     end
   end
 
-  describe "dictionaries" do
+  describe "maps" do
+    test "non-string keys" do
+      assert_raise Protocol.UndefinedError, ~r/must be binaries/, fn ->
+        encode!(%{1 => "hello"})
+      end
+    end
+
+    test "unordered keys" do
+      assert encode!(%{"b" => 2, "a" => 1}) == "d1:ai1e1:bi2ee"
+    end
   end
 end
