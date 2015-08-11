@@ -1,4 +1,4 @@
-Dht
+DHT
 ===
 
-** TODO: Add description **
+An experiment in Elixir, writing a DHT.

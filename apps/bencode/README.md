@@ -1,4 +1,4 @@
 Bencode
 =======
 
-** TODO: Add description **
+An implementation of the Bencode protocol, both encoding and decoding.
