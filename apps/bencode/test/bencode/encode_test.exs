@@ -20,7 +20,7 @@ defmodule Bencode.EncodeTest do
     end
 
     test "with bitstring" do
-      assert_raise Protocol.UndefinedError, fn ->
+      assert_raise Protocol.UndefinedError, ~r/bitstrings/, fn ->
         encode!(<< 0 :: size(1) >>)
       end
     end
