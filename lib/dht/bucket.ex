@@ -14,16 +14,12 @@ defmodule DHT.Bucket do
     Set.size(members)
   end
 
-  @spec add(DHT.Bucket.t, DHT.ID.t) :: {:ok, DHT.Bucket.t}
-  def add(%DHT.Bucket{members: members} = bucket, id) do
-    if cover?(bucket, id) do
-      unless Set.member?(members, id) do
-        {:ok, %{bucket | members: Set.put(members, id)}}
-      else
-        {:error, "#{id} already exists within bucket"}
-      end
-    else
-      {:error, "#{id} is not within #{inspect bucket.range}"}
+  @spec add(DHT.Bucket.t, DHT.ID.t) :: DHT.Bucket.t
+  def add(%DHT.Bucket{} = bucket, id) do
+    unless cover?(bucket, id) do
+      raise ArgumentError, "#{id} is not within #{inspect bucket.range}"
     end
+
+    %{bucket | members: Set.put(bucket.members, id)}
   end
 end

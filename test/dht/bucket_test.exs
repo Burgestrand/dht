@@ -22,23 +22,20 @@ defmodule DHT.BucketTest do
   end
 
   test "#add/2 - adding a new entry to an empty bucket" do
-    bucket = %DHT.Bucket{range: 2..8}
+    bucket = %DHT.Bucket{range: 2..8} |> DHT.Bucket.add(4)
+    assert DHT.Bucket.size(bucket) == 1
+  end
 
-    assert DHT.Bucket.size(bucket) == 0
-    {:ok, bucket} = DHT.Bucket.add(bucket, 4)
+  test "#add/2 - adding an entry that already exists in the bucket" do
+    bucket = %DHT.Bucket{range: 2..8} |> DHT.Bucket.add(4) |> DHT.Bucket.add(4)
     assert DHT.Bucket.size(bucket) == 1
   end
 
   test "#add/2 - adding a new entry that is not covered by the bucket" do
     bucket = %DHT.Bucket{range: 2..8}
 
-    assert DHT.Bucket.add(bucket, 9) == {:error, "9 is not within 2..8"}
-  end
-
-  test "#add/2 - adding an entry that already exists in the bucket" do
-    bucket = %DHT.Bucket{range: 2..8}
-    {:ok, bucket} = DHT.Bucket.add(bucket, 4)
-
-    assert DHT.Bucket.add(bucket, 4) == {:error, "4 already exists within bucket"}
+    assert_raise ArgumentError, "9 is not within 2..8", fn ->
+      DHT.Bucket.add(bucket, 9)
+    end
   end
 end
