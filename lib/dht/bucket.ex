@@ -14,6 +14,7 @@ defmodule DHT.Bucket do
     Set.size(members)
   end
 
+  @doc "Add a new member to the bucket."
   @spec add(DHT.Bucket.t, DHT.ID.t) :: DHT.Bucket.t
   def add(%DHT.Bucket{members: members} = bucket, id) do
     unless cover?(bucket, id) do
