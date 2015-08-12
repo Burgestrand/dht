@@ -15,11 +15,11 @@ defmodule DHT.Bucket do
   end
 
   @spec add(DHT.Bucket.t, DHT.ID.t) :: DHT.Bucket.t
-  def add(%DHT.Bucket{} = bucket, id) do
+  def add(%DHT.Bucket{members: members} = bucket, id) do
     unless cover?(bucket, id) do
       raise ArgumentError, "#{id} is not within #{inspect bucket.range}"
     end
 
-    %{bucket | members: Set.put(bucket.members, id)}
+    %{bucket | members: Set.put(members, id)}
   end
 end
