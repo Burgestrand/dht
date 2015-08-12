@@ -4,8 +4,10 @@ defmodule DHT.BucketTest do
   test "default bucket" do
     bucket = %DHT.Bucket{}
 
+    assert DHT.Bucket.cover?(bucket, -1) == false
     assert DHT.Bucket.cover?(bucket, 0) == true
     assert DHT.Bucket.cover?(bucket, DHT.ID.max) == true
+    assert DHT.Bucket.cover?(bucket, DHT.ID.max + 1) == false
   end
 
   test "#cover?/2" do
