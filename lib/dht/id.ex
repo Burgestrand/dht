@@ -1,7 +1,7 @@
 defmodule DHT.ID do
   @length 20
   @size @length * 8
-  @max :math.pow(2, @size) - 1
+  @max :erlang.bsl(1, @size) - 1
 
   @type t :: integer
 
