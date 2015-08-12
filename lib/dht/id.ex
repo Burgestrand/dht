@@ -1,5 +1,7 @@
 defmodule DHT.ID do
   @length 20
+  @size @length * 8
+  @max :math.pow(2, @size) - 1
 
   @type t :: integer
 
@@ -9,11 +11,13 @@ defmodule DHT.ID do
     :crypto.rand_bytes(@length) |> :binary.decode_unsigned(:big)
   end
 
+  @doc "Retrieve the bit size of ID."
+  def size, do: @size
+  def max, do: @max
+
   @doc "Calculate distance between two IDs."
   @spec distance(t, t) :: integer
-  def distance(a, b) do
-    :erlang.bxor(a, b)
-  end
+  def distance(a, b), do: :erlang.bxor(a, b)
 
   @doc "Convert ID to a proper human-readable format."
   @spec to_string(t) :: binary
