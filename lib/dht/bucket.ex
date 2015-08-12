@@ -8,13 +8,19 @@ defmodule DHT.Bucket do
     Enum.member?(range, id)
   end
 
-  @doc "Number of members in the bucket."
+  @doc "Number of IDs in the bucket."
   @spec size(DHT.Bucket.t) :: integer
   def size(%DHT.Bucket{members: members}) do
     Set.size(members)
   end
 
-  @doc "Add a new member to the bucket."
+  @doc "True if ID is in the bucket."
+  @spec member?(DHT.Bucket.t, DHT.ID.t) :: boolean
+  def member?(%DHT.Bucket{members: members}, id) do
+    Set.member?(members, id)
+  end
+
+  @doc "Add a new ID to the bucket."
   @spec add(DHT.Bucket.t, DHT.ID.t) :: DHT.Bucket.t
   def add(%DHT.Bucket{members: members} = bucket, id) do
     unless cover?(bucket, id) do

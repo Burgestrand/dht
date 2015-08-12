@@ -38,4 +38,12 @@ defmodule DHT.BucketTest do
       DHT.Bucket.add(bucket, 9)
     end
   end
+
+  test "#member?/2" do
+    bucket = %DHT.Bucket{range: 2..8} |> DHT.Bucket.add(4)
+
+    assert DHT.Bucket.member?(bucket, 4) == true
+    assert DHT.Bucket.member?(bucket, 7) == false
+    assert DHT.Bucket.member?(bucket, 10) == false
+  end
 end
